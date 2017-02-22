@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        * { margin: 0 ; padding: 0;}
+        body { background-color: #ccc}
+        canvas { background-color: #fff}
+        #pointer { position: absolute; left: 300px; top: 300px; width:174px; height: 174px; border-radius: 50%; margin: -70px 0 0 -87px; }
+
+
+    </style>
+</head>
+<body>
+
+
+<canvas id="my-canvas" width="600" height="600"></canvas>
+<div id="pointer"></div>
+<script>
+
+
+    var  oCanvas = $("my-canvas");
+    var oPointer =  $("pointer");
+    var context = oCanvas.getContext("2d");
+    var angle = 0;//默认旋转的角度
+    //先把坐标原点移到中心
+    context.translate(300,300);
+
+    //应用的图片预加载功能
+
+    //所有url的集合
+    var len = 3;
+    var loadNum = 0;
+    var oUrls = {
+        "bg1":"bg1.png?1",
+        "bg2":"bg2.png",
+        "pointer":"pointer.png"
+    };
+    //所有图片的集合
+    var oImgs = {};
+
+    //通过for in
+    for(var attr in oUrls){
+        //oImgs["bg1"] = document.createElement("img");
+        //oImgs["bg1"].src = "bg1.png"//oUrls["bg1"];
+
+        oImgs[attr] = document.createElement("img");
+        oImgs[attr].src = oUrls[attr];
+        oImgs[attr].onload=function () {
+            //当图片加载完成以后
+            loadNum++;
+            if(loadNum==len){
+                //已加载的图片数量=需要加载的图片数量
+
+                draw() //开始画图
+            }
+
+        }
+    }
+
+
+//531
+    function draw() {
+        context.clearRect(-300,-300,600,600)//先清除画布
+
+        //背景2
+        context.drawImage(oImgs["bg2"],-265,-265);
+        context.save(); //在旋转之前，先保存未旋转的状态
+        //让奖项旋转
+        context.rotate(angle*Math.PI/180)//需要的是弧度，需要转换
+        //背景1
+        context.drawImage(oImgs["bg1"],-224,-224);
+
+        //旋转绘画结束，在恢复到之前的状态
+        context.restore()//恢复
+
+        //指针  174 228
+        context.drawImage(oImgs["pointer"],-87,-114)
+    }
+
+
+
+
+    oPointer.onclick=function () {
+        //点击抽取，让转盘转起来
+
+        //1、生成成奖项，
+        //2、生成旋转的角度
+        //3、旋转运动的方法
+        //4、旋转结束，停止
+
+        setInterval(function () {
+            angle++ //改变旋转的角度
+
+            //把内容画出来
+            draw()
+        },30)
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function $(id) {
+        return document.getElementById(id)
+    }
+</script>
+</body>
+</html>
