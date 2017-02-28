@@ -123,6 +123,19 @@ var move = function() {
 	ourplane.style.top = selfplaneY - selfplane.planesizeY / 2 + 'px';
 
 }
+var touchMove = function(event){
+	var event = event || window.event;
+	
+	if(event.targetTouches.length ==1){
+	
+		var touch = event.targetTouches[0];
+		var selfplaneX = touch.clientX;
+		var selfplaneY = touch.clientY;
+		ourplane.style.left = selfplaneX - selfplane.planesizeX / 2 + 'px';
+		ourplane.style.top = selfplaneY - selfplane.planesizeY / 2 + 'px';
+		console.log(selfplaneX)
+	}
+}
 
 //暂停事件
 var flag = 0;
@@ -131,7 +144,9 @@ var pause = function() {
 		menu.style.display = 'block';
 		if(document.removeEventListener) {
 			maindiv.removeEventListener('mousemove', move, true);
+			maindiv.removeEventListener('touchmove', touchMove, true);
 			bodyobj.removeEventListener('mousemove', side, true);
+			bodyobj.removeEventListener('touchmove', side, true);
 		} else if(document.detachEvent) {
 			maindiv.detachEvent('onmousemove', move);
 			bodyobj.detachEvent('onmousemove', side)
@@ -142,7 +157,9 @@ var pause = function() {
 		menu.style.display = 'none';
 		if(document.addEventListener) {
 			maindiv.addEventListener('mousemove', move, true);
+			maindiv.addEventListener('touchmove', touchMove, true);
 			bodyobj.addEventListener('mousemove', side, true);
+			bodyobj.addEventListener('touchmove', touchMove, true);
 		} else if(document.attachEvent) {
 			maindiv.attachEvent('onmousemove', move);
 			bodyobj.attachEvent('onmousemove', side)
@@ -160,12 +177,14 @@ var side = function() {
 		if(bodyobjX < 505 || bodyobjX > 815 || bodyobjY > 568 || bodyobjY < 0) {
 			if(document.removeEventListener) {
 				maindiv.removeEventListener('mousemove', move, true);
+				maindiv.removeEventListener('touchmove', touchMove, true);
 			} else if(document.detachEvent) {
 				maindiv.detachEvent('onmousemove', move);
 			}
 		} else {
 			if(document.addEventListener) {
 				maindiv.addEventListener('mousemove', move, true);
+				maindiv.addEventListener('touchmove', touchMove, true);
 			} else if(document.attachEvent) {
 				maindiv.attachEvent('onmousemove', move);
 			}
@@ -175,9 +194,13 @@ var side = function() {
 if(document.addEventListener) {
 	selfplane.imagenode.addEventListener('click', pause, true);
 	maindiv.addEventListener('mousemove', move, true);
+	maindiv.addEventListener('touchmove', touchMove, true);
 	bodyobj.addEventListener('mousemove', side, true);
+	bodyobj.addEventListener('touchmove', touchMove, true);
 	menu.getElementsByTagName('button')[0].addEventListener('click', pause, true);
+	menu.getElementsByTagName('button')[0].addEventListener('touchstart', pause, true);
 	menu.getElementsByTagName('button')[2].addEventListener('click', jixu, true);
+	menu.getElementsByTagName('button')[2].addEventListener('touchstart', jixu, true);
 } else if(document.attachEvent) {
 	maindiv.removeEventListener('mousemove', move, true);
 	bodyobj.removeEventListener('mousemove', side, true);
@@ -214,7 +237,7 @@ function start() {
 			enemys.push(new enemy(1, 19, 286, 34, 24, 1000, 360, random(1, 4), "image/xx.gif", "image/enemy1_fly_1.png"));
 		}
 		mark = 0;
-		console.log(mark1);
+		
 	}
 	//移动敌方飞机
 	var enemyslen = enemys.length;
