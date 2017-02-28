@@ -133,7 +133,7 @@ var touchMove = function(event){
 		var selfplaneY = touch.clientY;
 		ourplane.style.left = selfplaneX - selfplane.planesizeX / 2 + 'px';
 		ourplane.style.top = selfplaneY - selfplane.planesizeY / 2 + 'px';
-		console.log(selfplaneX)
+		
 	}
 }
 
