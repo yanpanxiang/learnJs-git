@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" href="css/mymain.css" />
+	</head>
+	<body>
+		<div id="contentdiv">
+			<!--开始界面-->
+			<div id="startdiv">
+				<button onclick="begin();">开始游戏</button>
+			</div>
+			<div id="maindiv">
+				<!--分数界面-->
+				<div id="scorediv">
+					<label>分数：</label>
+					<label id="label">0</label>
+				</div>
+				<!--游戏中点击出现菜单-->
+				<div id="menu">
+					<button>继续</button>
+					<br />
+					<button>重新开始</button>
+					<br />
+					<button>返回主页</button>
+				</div>
+				<!--碰撞结束-->
+				<div id="enddiv">
+					<p class="plantext">飞机大战分数</p>
+					<p id="planscore">0</p>
+					<label><button onclick="jixu();">继续</button></label>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mymain.js" ></script>
+	</body>
+</html>
